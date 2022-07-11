@@ -18,6 +18,15 @@ class BookJsonTest {
     @Test
     @Throws(Exception::class)
     fun jsonTest() {
-        // FIXME
+        val book= Book(
+            title="테스트",
+            publishedAt = null
+        )
+        val content="{\"title\":\"테스트\"}"
+        assertThat(this.json.parseObject(content).title).isEqualTo(book.title)
+        assertThat(this.json.parseObject(content).publishedAt).isNull()
+        assertThat(this.json.write(book)).isEqualToJson("/test.json")
+        assertThat(this.json.write(book)).extractingJsonPathStringValue("title")
+            .isEqualTo("테스트")
     }
 }
